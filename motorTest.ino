@@ -1,43 +1,3 @@
-// Simple Motor Shield sketch
-// -----------------------------------
-//
-// By arduino.cc user "Krodal".
-// June 2012
-// Open Source / Public Domain
-//
-// Using Arduino 1.0.1
-//
-// A simple sketch for the motor shield,
-// without using the Adafruit library.
-//
-// The outputs can be used for DC-motors
-// (either full H-bridge or just On and Off), lights,
-// relays, solenoids, etc.
-// But stepper motors can not be used !
-// Servo motors can be used with the default Servo library.
-//
-// A maximum of 4 DC motors can be used with full-bridge,
-// or a maximum of 8 normal outputs, or a combination.
-// Two servo motors can always be used, they use the +5V
-// of the Arduino board, so the voltage regulator could
-// get hot.
-//
-// Tested with an Ebay clone with the Arduino Uno.
-//
-// Parts of the code are from an old Adafruit Motor Shield
-// library, which was public domain at that time.
-// This code is also public domain
-//
-// This simplified program is using the normal
-// Arduino library functions as much as possible.
-//
-// The motors will make a whistling sound,
-// due to the analogWrite() PWM frequency.
-// The Adafruit library is specifically designed to avoid
-// this, so use the Adafruit library for a better result.
-//
-//
-//
 // Connector usage
 // ---------------
 // The order is different than what you would expect.
@@ -186,13 +146,24 @@ void loop()
   // Let it run full speed forward and half speed backward.
   // If 'BRAKE' or 'RELEASE' is used, the 'speed' parameter
   // is ignored.
-  
+/* OLD CODE
   val = map(analogRead(potPin), 1,  1023, 0, 255);
-  
- 
+
+
   //motor_output(MOTOR1_A, HIGH, 255);
   motor(1, FORWARD, val);
   Serial.println(val);
+*/
+  val = map(analogRead(potPin), 1,  807, -255, 255);
+ Serial.println(val);
+
+ if (val>50){
+   motor(1, FORWARD, val);
+ }
+
+ else if (val<-50){
+   motor(1, BACKWARD, -val);
+ }
   /*
   delay(2000);
   // Be friendly to the motor: stop it before reverse.
